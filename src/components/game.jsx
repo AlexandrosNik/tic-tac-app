@@ -20,8 +20,11 @@ class Game extends Component {
         const current = history[history.length - 1];
         const squares = [...current.squares];
         const location = getLocations(i);
+        const winner = calculateWinner(squares);
         
-        if(calculateWinner(squares) || squares[i]) return;
+        
+        
+        if(winner || squares[i]) return;
         
         let xIsNext = this.state.xIsNext;
         squares[i] = xIsNext ? 'X' : 'O';
@@ -65,7 +68,7 @@ class Game extends Component {
         
         let status ='Next player: ';
         if(winner) {
-            status=`Winner ${winner}`;
+            status=`Winner ${winner.isWinner}`;
         }
         else {
             status+=xIsNext ? 'X' : 'O';
@@ -75,6 +78,7 @@ class Game extends Component {
         <div className="game">
             <div className="game-board">
             <Board 
+                winnerLine={winner ? winner.winnerLine:''}
                 xIsNext={xIsNext} 
                 squares={current.squares} 
                 onClick={this.handleClick}
