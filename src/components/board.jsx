@@ -23,9 +23,12 @@ class Board extends Component {
 
   
     renderSquare(i) {
+        const winnerI = this.props.winnerLine.includes(i);
+    
         return (
             <Square 
                 key={i}
+                classWinner={winnerI ? ' square--winning':''}
                 value={this.props.squares[i]} 
                 onClick={() => this.props.onClick(i)}
             />
