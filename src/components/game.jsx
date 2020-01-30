@@ -47,10 +47,10 @@ class Game extends Component {
     }
     
     render() {
-        const { history, xIsNext, stepNumber } = this.state;
-        const current = history[this.state.stepNumber];
+        const { history, xIsNext, stepNumber, isDescending } = this.state;
+        const current = history[stepNumber];
         const winner = calculateWinner(current.squares);
-        
+    
         const moves = history.map((move,index) => {
             const desc = index 
             ? "Go to move #" + index + " @ " + history[index].location 
@@ -73,6 +73,10 @@ class Game extends Component {
         else {
             status+=xIsNext ? 'X' : 'O';
         }
+        
+        if(!winner && !current.squares.includes(null)){
+            status = 'Draw';
+        }
 
         return (
         <div className="game">
@@ -87,10 +91,10 @@ class Game extends Component {
             <div className="game-info">
             <div>{status}</div>
                 <ul>
-                    {this.state.isDescending ? moves : moves.reverse()}
+                    {isDescending ? moves : moves.reverse()}
                 </ul>
                 <button onClick={() => this.sortHistory()}>
-                    Sort By {this.state.isDescending ? 'Desc':'Asc'}
+                    Sort By {isDescending ? 'Desc':'Asc'}
                 </button>
             </div>
         </div>
